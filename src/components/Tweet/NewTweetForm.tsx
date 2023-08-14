@@ -2,16 +2,20 @@
 
 import { useForm } from "react-hook-form";
 import { Button } from "../General";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface FormData {
   content: string;
 }
 
 export default function NewTweetForm() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm<FormData>();
 
@@ -24,6 +28,8 @@ export default function NewTweetForm() {
         },
         body: JSON.stringify(data),
       });
+      reset({ content: "" });
+      router.refresh();
     } catch (error) {
       console.error(error);
     }
