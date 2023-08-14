@@ -1,1 +1,3 @@
-export default function Tweets() {}
+export default function Tweets() {
+  return <div></div>;
+}

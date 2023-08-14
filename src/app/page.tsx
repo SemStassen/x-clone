@@ -1,4 +1,5 @@
 import { NewTweet } from "@/components/Tweet";
+import { Tweets } from "@/components/Ui";
 
 export default function Home() {
   return (
