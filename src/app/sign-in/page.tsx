@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-export interface FormDataSignUp {
+interface FormDataSignUp {
   username: string;
   password: string;
 }
@@ -49,15 +49,21 @@ export default function Page() {
               label="username"
               name="username"
               type="text"
-              register={register}
-              options={{ required: true, minLength: 3, maxLength: 20 }}
+              register={register("username", {
+                required: true,
+                minLength: 3,
+                maxLength: 20,
+              })}
             />
             <Input
               label="password"
               name="password"
               type="password"
-              register={register}
-              options={{ required: true, minLength: 3, maxLength: 50 }}
+              register={register("password", {
+                required: true,
+                minLength: 3,
+                maxLength: 50,
+              })}
             />
             <Button type="submit" className="w-100">
               Sign in

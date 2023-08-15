@@ -1,33 +1,20 @@
 import { HTMLInputTypeAttribute } from "react";
-import { RegisterOptions, UseFormRegister } from "react-hook-form";
-import type { FormDataSignUp } from "@/app/sign-up/page";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 type InputProps = {
   label: string;
-  name: keyof FormDataSignUp;
-  register: UseFormRegister<FormDataSignUp>;
+  name: string;
   type: HTMLInputTypeAttribute;
-  options?: RegisterOptions;
+  register: UseFormRegisterReturn;
 };
 
-export default function Input({
-  label,
-  name,
-  type,
-  register,
-  options,
-}: InputProps) {
+export default function Input({ label, name, type, register }: InputProps) {
   return (
     <div>
       <label className="block font-bold" htmlFor={name}>
         {label}
       </label>
-      <input
-        className="p-2 text-xl"
-        type={type}
-        id={name}
-        {...register(name, options)}
-      />
+      <input className="p-2 text-xl" type={type} id={name} {...register} />
     </div>
   );
 }
