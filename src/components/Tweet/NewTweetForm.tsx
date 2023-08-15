@@ -28,7 +28,7 @@ export default function NewTweetForm() {
         },
         body: JSON.stringify(data),
       });
-      reset({ content: "" });
+      reset();
       router.refresh();
     } catch (error) {
       console.error(error);
