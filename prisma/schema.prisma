@@ -12,9 +12,9 @@ datasource db {
 
 model Tweet {
   id        String   @id @default(uuid())
-  user_id   String
+  userId    String   @map("user_id")
   content   String
-  user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 

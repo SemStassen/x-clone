@@ -6,10 +6,13 @@ export default async function Home() {
   const tweets = await prisma.tweet.findMany({
     take: 10,
     orderBy: { createdAt: "desc" },
+    include: {
+      user: true,
+    },
   });
 
   return (
-    <div className="min-h-screen container mx-auto flex">
+    <div className="container mx-auto flex min-h-screen">
       <header>
         <div className="w-[400px] text-white">NavBar</div>
       </header>

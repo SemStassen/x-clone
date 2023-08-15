@@ -1,7 +1,7 @@
-import type { Tweet } from "@prisma/client";
+import { type Tweet, type User } from "@prisma/client";
 
 interface TweetsProps {
-  tweets: Array<Tweet>;
+  tweets: Array<Tweet & { user: User }>;
 }
 
 export default async function Tweets({ tweets }: TweetsProps) {
@@ -9,7 +9,8 @@ export default async function Tweets({ tweets }: TweetsProps) {
     <ul>
       {tweets.map((t) => (
         <li key={t.id} className="border px-4 py-6 text-white">
-          {t.content}
+          <small>{t.user.username}</small>
+          <p>{t.content}</p>
         </li>
       ))}
     </ul>
