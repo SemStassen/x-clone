@@ -14,7 +14,12 @@ export default function Input({ label, name, type, register }: InputProps) {
       <label className="block font-bold" htmlFor={name}>
         {label}
       </label>
-      <input className="p-2 text-xl" type={type} id={name} {...register} />
+      <input
+        className="rounded-lg border border-slate-400 p-2 text-xl"
+        type={type}
+        id={name}
+        {...register}
+      />
     </div>
   );
 }
