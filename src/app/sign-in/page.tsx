@@ -31,7 +31,9 @@ export default function Page() {
     });
 
     if (response.status === 200) {
+      // refresh for caching purposes
       router.push("/");
+      router.refresh();
     }
   };
 
