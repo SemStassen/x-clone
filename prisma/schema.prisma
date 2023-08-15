@@ -11,6 +11,10 @@ datasource db {
 }
 
 model Tweet {
-  id      String @id @default(uuid())
-  content String
+  id         String   @id @default(uuid())
+  content    String
+  created_at DateTime @default(now()) @map("createdAt")
+  updated_at DateTime @updatedAt @map("updatedAt")
+
+  @@map("tweets")
 }
