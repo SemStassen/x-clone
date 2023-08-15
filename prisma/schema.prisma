@@ -12,9 +12,11 @@ datasource db {
 
 model Tweet {
   id        String   @id @default(uuid())
+  user_id   String
   content   String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("tweets")
 }
@@ -24,7 +26,8 @@ model User {
   auth_session Session[]
   key          Key[]
 
-  username String @unique
+  username String  @unique
+  tweets   Tweet[]
 }
 
 model Session {
