@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { Button } from "../General";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 interface FormData {
@@ -9,9 +10,12 @@ interface FormData {
 }
 
 export default function NewTweetForm() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>();
 
@@ -24,6 +28,8 @@ export default function NewTweetForm() {
         },
         body: JSON.stringify(data),
       });
+      reset();
+      router.refresh();
     } catch (error) {
       console.error(error);
     }
@@ -32,7 +38,7 @@ export default function NewTweetForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="text-white">
       <textarea
-        className="bg-black text-xl w-full focus-visible:outline-none"
+        className="w-full bg-black text-xl focus-visible:outline-none"
         placeholder="What is happening?"
         {...register("content", { required: true })}
       ></textarea>
