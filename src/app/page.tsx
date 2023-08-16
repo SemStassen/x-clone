@@ -9,7 +9,10 @@ import Link from "next/link";
 export default async function Home() {
   const tweets = await prisma.tweet.findMany({
     take: 10,
-    orderBy: { createdAt: "desc" },
+    orderBy: { created_at: "desc" },
+    include: {
+      user: true,
+    },
   });
 
   const session = await auth
