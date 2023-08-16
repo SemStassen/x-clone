@@ -12,13 +12,25 @@ datasource db {
 
 model Tweet {
   id        String   @id @default(uuid())
-  userId    String   @map("userId")
+  userId    String   @map("user_id")
   content   String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   user      User     @relation(fields: [userId], references: [id])
+  likes     Like[]
 
   @@map("tweets")
+}
+
+model Like {
+  id      String @id @default(uuid())
+  userId  String @map("user_id")
+  tweetId String @map("tweet_id")
+
+  user  User  @relation(fields: [userId], references: [id])
+  tweet Tweet @relation(fields: [tweetId], references: [id])
+
+  @@map("likes")
 }
 
 model User {
@@ -29,6 +41,7 @@ model User {
 
   username String  @unique
   tweets   Tweet[]
+  likes    Like[]
 }
 
 model Session {
