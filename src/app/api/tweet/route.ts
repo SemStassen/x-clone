@@ -13,8 +13,6 @@ export async function POST(req: Request) {
     })
     .validate();
 
-  console.log(session);
-
   const tweet = await prisma.tweet.create({
     data: {
       content: data.content,
@@ -25,9 +23,8 @@ export async function POST(req: Request) {
       },
     },
   });
-  console.log(tweet);
 
-  return NextResponse.json(data, {
+  return NextResponse.json(null, {
     status: 200,
   });
 }
