@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest) => {
     });
 
     const authRequest = auth.handleRequest({
-      req,
+      request: req,
       cookies,
     });
 

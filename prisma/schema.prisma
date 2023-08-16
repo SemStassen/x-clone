@@ -12,22 +12,27 @@ datasource db {
 
 model Tweet {
   id        String   @id @default(uuid())
+  userId    String   @map("userId")
   content   String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id])
 
   @@map("tweets")
 }
 
 model User {
+  // Lucia Auth
   id           String    @id @unique
   auth_session Session[]
   key          Key[]
 
-  username String @unique
+  username String  @unique
+  tweets   Tweet[]
 }
 
 model Session {
+  // Lucia Auth
   id             String @id @unique
   user_id        String
   active_expires BigInt
@@ -38,6 +43,7 @@ model Session {
 }
 
 model Key {
+  // Lucia Auth
   id              String  @id @unique
   hashed_password String?
   user_id         String
