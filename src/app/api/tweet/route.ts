@@ -13,10 +13,16 @@ export async function POST(req: Request) {
     })
     .validate();
 
+  console.log(session.user.id);
+
   const tweet = await prisma.tweet.create({
     data: {
       content: data.content,
-      user_id: session.user.userId,
+      user: {
+        connect: {
+          id: session.user.id,
+        },
+      },
     },
   });
 
