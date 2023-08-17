@@ -1,4 +1,4 @@
-import type { Like, Tweet, User } from "@prisma/client";
+import type { Tweet, User } from "@prisma/client";
 import { TweetToolBar } from "../General";
 
 interface TweetWithUser extends Tweet {

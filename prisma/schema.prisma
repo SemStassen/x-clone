@@ -29,7 +29,7 @@ model Like {
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   tweet Tweet @relation(fields: [tweetId], references: [id], onDelete: Cascade)
 
-  @@id([userId, tweetId], name: "id")
+  @@id([userId, tweetId])
 }
 
 model User {

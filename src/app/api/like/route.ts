@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
     const like = await prisma.like.findUnique({
       where: {
-        id: {
+        userId_tweetId: {
           tweetId: tweetID,
           userId: session.user.userId,
         },
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     if (like) {
       await prisma.like.delete({
         where: {
-          id: {
+          userId_tweetId: {
             tweetId: tweetID,
             userId: session.user.userId,
           },
