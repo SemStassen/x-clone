@@ -23,14 +23,13 @@ model Tweet {
 }
 
 model Like {
-  id      String @id @default(uuid())
   userId  String @map("user_id")
   tweetId String @map("tweet_id")
 
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   tweet Tweet @relation(fields: [tweetId], references: [id], onDelete: Cascade)
 
-  @@map("likes")
+  @@id([userId, tweetId], name: "id")
 }
 
 model User {

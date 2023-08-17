@@ -19,16 +19,23 @@ export async function POST(req: Request) {
         status: 401,
       });
     }
-    const like = await prisma.like.findFirst({
+
+    const like = await prisma.like.findUnique({
       where: {
-        tweetId: tweetID,
-        userId: session.user.userId,
+        id: {
+          tweetId: tweetID,
+          userId: session.user.userId,
+        },
       },
     });
+
     if (like) {
       await prisma.like.delete({
         where: {
-          id: like.id,
+          id: {
+            tweetId: tweetID,
+            userId: session.user.userId,
+          },
         },
       });
     } else {

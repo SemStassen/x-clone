@@ -3,7 +3,9 @@ import { TweetToolBar } from "../General";
 
 interface TweetWithUser extends Tweet {
   user: User;
-  likes: Like[];
+  _count: {
+    likes: number;
+  };
 }
 
 interface TweetsProps {
@@ -17,7 +19,7 @@ export default async function Tweets({ tweets }: TweetsProps) {
         <li key={t.id} className="border px-4 py-6 text-white">
           <small>@{t.user.username}</small>
           <p>{t.content}</p>
-          <TweetToolBar id={t.id} likes={t.likes}></TweetToolBar>
+          <TweetToolBar id={t.id} likes={t._count.likes}></TweetToolBar>
         </li>
       ))}
     </ul>

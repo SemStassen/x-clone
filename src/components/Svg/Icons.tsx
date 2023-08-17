@@ -4,7 +4,7 @@ interface IconProps {
   className?: string;
 }
 
-export function HeartIcon({ className }: IconProps) {
+export function HeartIcon({ className = "" }: IconProps) {
   return (
     <Svg className={`${className}`}>
       <g>
@@ -14,7 +14,7 @@ export function HeartIcon({ className }: IconProps) {
   );
 }
 
-export function CommentIcon({ className }: IconProps) {
+export function CommentIcon({ className = "" }: IconProps) {
   return (
     <Svg className={`${className}`}>
       <g>

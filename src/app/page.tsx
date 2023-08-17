@@ -12,7 +12,11 @@ export default async function Home() {
     orderBy: { createdAt: "desc" },
     include: {
       user: true,
-      likes: true,
+      _count: {
+        select: {
+          likes: true,
+        },
+      },
     },
   });
 
