@@ -16,7 +16,7 @@ model Tweet {
   content   String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   likes     Like[]
 
   @@map("tweets")
@@ -24,11 +24,11 @@ model Tweet {
 
 model Like {
   id      String @id @default(uuid())
-  userId  String @unique @map("user_id")
+  userId  String @map("user_id")
   tweetId String @map("tweet_id")
 
-  user  User  @relation(fields: [userId], references: [id])
-  tweet Tweet @relation(fields: [tweetId], references: [id])
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tweet Tweet @relation(fields: [tweetId], references: [id], onDelete: Cascade)
 
   @@map("likes")
 }
