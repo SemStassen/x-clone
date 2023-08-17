@@ -14,6 +14,11 @@ export async function POST(req: Request) {
       })
       .validate();
 
+    if (!session) {
+      return NextResponse.json(null, {
+        status: 401,
+      });
+    }
     const like = await prisma.like.findFirst({
       where: {
         tweetId: tweetID,
