@@ -1,4 +1,5 @@
 import type { Tweet, User } from "@prisma/client";
+import { TweetToolBar } from "../General";
 
 interface TweetWithUser extends Tweet {
   user: User;
@@ -14,8 +15,9 @@ export default async function Tweets({ tweets }: TweetsProps) {
     <ul>
       {tweets.map((t) => (
         <li key={t.id} className="border px-4 py-6 text-white">
-          <small>{t.user.username}</small>
+          <small>@{t.user.username}</small>
           <p>{t.content}</p>
+          <TweetToolBar></TweetToolBar>
         </li>
       ))}
     </ul>

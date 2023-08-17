@@ -1,5 +1,5 @@
 import { Button } from "@/components/General";
-import { NewTweet } from "@/components/Tweet";
+import { NewTweet } from "@/components/NewTweet";
 import { Tweets } from "@/components/Ui";
 import { auth } from "@/server/lucia";
 import { prisma } from "@/server/prisma";
