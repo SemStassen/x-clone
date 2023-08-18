@@ -18,13 +18,16 @@ export default function TweetToolBar({ id, likes }: TweetToolBarProps) {
 
   const updateLikes = async ({ id }: updateLikesProps) => {
     try {
-      await fetch("/api/like", {
+      const response = await fetch("/api/like", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(id),
       });
+      if (response.status == 401) {
+        router.push("/sign-up");
+      }
       router.refresh();
     } catch (e) {
       console.log(e);
