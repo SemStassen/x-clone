@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     })
     .validate();
 
-  const tweet = await prisma.tweet.create({
+  await prisma.tweet.create({
     data: {
       content: data.content,
       user: {

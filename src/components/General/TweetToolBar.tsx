@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 interface TweetToolBarProps {
   likes: number;
+  isLiked: boolean;
   id: Tweet["id"];
 }
 
@@ -13,7 +14,11 @@ interface updateLikesProps {
   id: Tweet["id"];
 }
 
-export default function TweetToolBar({ id, likes }: TweetToolBarProps) {
+export default function TweetToolBar({
+  id,
+  likes,
+  isLiked,
+}: TweetToolBarProps) {
   const router = useRouter();
 
   const updateLikes = async ({ id }: updateLikesProps) => {
@@ -39,6 +44,7 @@ export default function TweetToolBar({ id, likes }: TweetToolBarProps) {
         bgColor={"group-hover:bg-yellow-200"}
         meta={likes}
         onClick={() => updateLikes({ id })}
+        status={isLiked}
       ></TweetToolBarItem>
       <TweetToolBarItem
         icon={<CommentIcon />}
@@ -55,7 +61,7 @@ interface TweetToolBarItemProps {
   icon: JSX.Element;
   textColor: string;
   bgColor: string;
-  clicked?: boolean;
+  status?: boolean;
   onClick: () => void;
   meta: number;
 }
@@ -64,13 +70,14 @@ function TweetToolBarItem({
   icon,
   textColor,
   bgColor,
-  clicked = false,
+  status,
   onClick,
   meta,
 }: TweetToolBarItemProps) {
   let iconActive = "";
-  if (clicked) {
-    iconActive = "text-red-600";
+
+  if (status) {
+    iconActive = "text-red-500";
   }
 
   return (

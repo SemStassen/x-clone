@@ -63,3 +63,45 @@ export async function POST(req: Request) {
     });
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    const tweetID = await req.json();
+
+    const session = await auth
+      .handleRequest({
+        request: null,
+        cookies,
+      })
+      .validate();
+
+    if (!session) {
+      return NextResponse.json(null, {
+        status: 401,
+      });
+    }
+
+    const like = await prisma.like.findUnique({
+      where: {
+        userId_tweetId: {
+          tweetId: tweetID,
+          userId: session.user.userId,
+        },
+      },
+    });
+
+    if (like) {
+      return NextResponse.json(true, {
+        status: 200,
+      });
+    } else {
+      return NextResponse.json(false, {
+        status: 200,
+      });
+    }
+  } catch (e) {
+    return NextResponse.json(null, {
+      status: 500,
+    });
+  }
+}
