@@ -1,12 +1,14 @@
 import { Button } from "@/components/General";
 import { NewTweet } from "@/components/NewTweet";
 import { Tweets } from "@/components/Ui";
-import { auth } from "@/server/lucia";
+import { auth, getPageSession } from "@/server/lucia";
 import { prisma } from "@/server/prisma";
 import { cookies } from "next/headers";
 import Link from "next/link";
 
 export default async function Home() {
+  const session = await getPageSession();
+
   const tweets = await prisma.tweet.findMany({
     take: 10,
     orderBy: { createdAt: "desc" },
@@ -17,15 +19,13 @@ export default async function Home() {
           likes: true,
         },
       },
+      likes: {
+        where: {
+          userId: session?.user.userId,
+        },
+      },
     },
   });
-
-  const session = await auth
-    .handleRequest({
-      request: null,
-      cookies,
-    })
-    .validate();
 
   return (
     <div className="container mx-auto flex min-h-screen">
