@@ -1,4 +1,4 @@
-import { auth } from "@/server/lucia";
+import { auth, getPageSession } from "@/server/lucia";
 import { prisma } from "@/server/prisma";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -7,18 +7,7 @@ export async function POST(req: Request) {
   try {
     const tweetID = await req.json();
 
-    const session = await auth
-      .handleRequest({
-        request: null,
-        cookies,
-      })
-      .validate();
-
-    if (!session) {
-      return NextResponse.json(null, {
-        status: 401,
-      });
-    }
+    const session = await getPageSession();
 
     const like = await prisma.like.findUnique({
       where: {

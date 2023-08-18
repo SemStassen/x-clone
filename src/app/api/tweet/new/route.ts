@@ -1,17 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/server/prisma";
-import { auth } from "@/server/lucia";
-import { cookies } from "next/headers";
+import { getPageSession } from "@/server/lucia";
 
 export async function POST(req: Request) {
   const data = await req.json();
 
-  const session = await auth
-    .handleRequest({
-      request: null,
-      cookies,
-    })
-    .validate();
+  const session = await getPageSession();
 
   await prisma.tweet.create({
     data: {
