@@ -1,9 +1,8 @@
 import { Button } from "@/components/General";
 import { NewTweet } from "@/components/NewTweet";
 import { Tweets } from "@/components/Ui";
-import { auth, getPageSession } from "@/server/lucia";
+import { getPageSession } from "@/server/lucia";
 import { prisma } from "@/server/prisma";
-import { cookies } from "next/headers";
 import Link from "next/link";
 
 export default async function Home() {

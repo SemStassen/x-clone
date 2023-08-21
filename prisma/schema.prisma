@@ -11,13 +11,14 @@ datasource db {
 }
 
 model Tweet {
-  id        String   @id @default(uuid())
-  userId    String   @map("user_id")
+  id        String    @id @default(uuid())
+  userId    String    @map("user_id")
   content   String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   likes     Like[]
+  comments  Comment[]
 
   @@map("tweets")
 }
@@ -32,15 +33,27 @@ model Like {
   @@id([userId, tweetId])
 }
 
+model Comment {
+  userId  String @map("user_id")
+  tweetId String @map("tweet_id")
+  content String
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tweet Tweet @relation(fields: [tweetId], references: [id], onDelete: Cascade)
+
+  @@id([userId, tweetId])
+}
+
 model User {
   // Lucia Auth
   id           String    @id @unique
   auth_session Session[]
   key          Key[]
 
-  username String  @unique
+  username String    @unique
   tweets   Tweet[]
   likes    Like[]
+  comments Comment[]
 }
 
 model Session {

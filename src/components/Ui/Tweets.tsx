@@ -1,7 +1,8 @@
-import type { Like, Tweet, User } from "@prisma/client";
-import { TweetToolBar } from "../General";
+import type { Like, Tweet as TweetType, User } from "@prisma/client";
+import Link from "next/link";
+import { Tweet } from "@/components/Ui";
 
-interface TweetWithUser extends Tweet {
+export interface TweetWithUser extends TweetType {
   user: User;
   _count: {
     likes: number;
@@ -17,14 +18,10 @@ export default async function Tweets({ tweets }: TweetsProps) {
   return (
     <ul>
       {tweets.map((t) => (
-        <li key={t.id} className="border px-4 py-6 text-white">
-          <small>@{t.user.username}</small>
-          <p>{t.content}</p>
-          <TweetToolBar
-            id={t.id}
-            isLiked={Boolean(t.likes.length)}
-            likes={t._count.likes}
-          ></TweetToolBar>
+        <li key={t.id}>
+          <Link href={`status/${t.id}`}>
+            <Tweet tweet={t}></Tweet>
+          </Link>
         </li>
       ))}
     </ul>
