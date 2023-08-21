@@ -11,6 +11,7 @@ interface FormData {
 
 export default function NewTweetForm() {
   const router = useRouter();
+  const maxCharacters = 140;
 
   const {
     register,
@@ -41,8 +42,8 @@ export default function NewTweetForm() {
 
   const characters = watch("content", "");
   useEffect(() => {
-    if (characters.length > 255) {
-      setValue("content", characters.slice(0, 255));
+    if (characters.length > maxCharacters) {
+      setValue("content", characters.slice(0, maxCharacters));
     }
   }, [characters, setValue]);
 
@@ -53,13 +54,18 @@ export default function NewTweetForm() {
         placeholder="What is happening?"
         {...register("content", {
           required: true,
-          maxLength: { value: 255, message: "Max length is 255" },
+          maxLength: {
+            value: maxCharacters,
+            message: `Max length is ${maxCharacters}`,
+          },
         })}
       ></textarea>
       {errors.content ? errors.content.message : null}
       <div className="mt-2 flex items-center">
         <div>
-          <span>{characters.length} / 255</span>
+          <span>
+            {characters.length} / {maxCharacters}
+          </span>
         </div>
         <Button type="submit" className="ms-auto block">
           Post
