@@ -3,6 +3,8 @@
 import { CommentIcon, HeartIcon } from "@/components/Svg";
 import { Tweet } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 interface TweetToolBarProps {
   likes: number;
@@ -20,9 +22,14 @@ export default function TweetToolBar({
   isLiked,
 }: TweetToolBarProps) {
   const router = useRouter();
+  const [likesState, setLikes] = useState(likes);
+  const [isLikedState, setIsLiked] = useState(isLiked);
 
   const updateLikes = async ({ id }: updateLikesProps) => {
     try {
+      isLikedState ? setLikes(likesState - 1) : setLikes(likesState + 1);
+      setIsLiked(!isLikedState);
+
       const response = await fetch("/api/like", {
         method: "POST",
         headers: {
@@ -32,10 +39,14 @@ export default function TweetToolBar({
       });
       if (response.status == 401) {
         router.push("/sign-up");
+      } else if (response.status == 500) {
+        toast.error("Oops, something went wrong.");
+        setLikes(likesState);
+        setIsLiked(isLikedState);
       }
-      router.refresh();
+      // router.refresh();
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -45,16 +56,16 @@ export default function TweetToolBar({
         icon={<HeartIcon />}
         textColor={"group-hover:text-yellow-200"}
         bgColor={"group-hover:bg-yellow-200"}
-        meta={likes}
+        metaCount={likesState}
         onClick={() => updateLikes({ id })}
-        status={isLiked}
+        status={isLikedState}
       ></TweetToolBarItem>
       <TweetToolBarItem
         icon={<CommentIcon />}
         textColor={"group-hover:text-green-200"}
         bgColor={"group-hover:bg-green-200"}
         onClick={() => null}
-        meta={0}
+        metaCount={0}
       ></TweetToolBarItem>
     </div>
   );
@@ -66,7 +77,7 @@ interface TweetToolBarItemProps {
   bgColor: string;
   status?: boolean;
   onClick: () => void;
-  meta: number;
+  metaCount: number;
 }
 
 function TweetToolBarItem({
@@ -75,7 +86,7 @@ function TweetToolBarItem({
   bgColor,
   status,
   onClick,
-  meta,
+  metaCount,
 }: TweetToolBarItemProps) {
   let iconActive = "";
 
@@ -92,7 +103,7 @@ function TweetToolBarItem({
         <div className={`h-6 w-6 fill-current text-slate-400 ${iconActive}`}>
           {icon}
         </div>
-        <span className={textColor}>{meta ? meta : 0}</span>
+        <span className={textColor}>{metaCount ? metaCount : 0}</span>
       </div>
     </button>
   );
