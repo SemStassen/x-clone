@@ -24,8 +24,6 @@ export default function NewTweetForm() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      console.log(data);
-
       await fetch("/api/tweet/new", {
         method: "POST",
         headers: {
