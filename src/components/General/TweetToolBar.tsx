@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 interface TweetToolBarProps {
   likes: number;
+  isLiked: boolean;
   id: Tweet["id"];
 }
 
@@ -13,18 +14,25 @@ interface updateLikesProps {
   id: Tweet["id"];
 }
 
-export default function TweetToolBar({ id, likes }: TweetToolBarProps) {
+export default function TweetToolBar({
+  id,
+  likes,
+  isLiked,
+}: TweetToolBarProps) {
   const router = useRouter();
 
   const updateLikes = async ({ id }: updateLikesProps) => {
     try {
-      await fetch("/api/like", {
+      const response = await fetch("/api/like", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(id),
       });
+      if (response.status == 401) {
+        router.push("/sign-up");
+      }
       router.refresh();
     } catch (e) {
       console.log(e);
@@ -39,6 +47,7 @@ export default function TweetToolBar({ id, likes }: TweetToolBarProps) {
         bgColor={"group-hover:bg-yellow-200"}
         meta={likes}
         onClick={() => updateLikes({ id })}
+        status={isLiked}
       ></TweetToolBarItem>
       <TweetToolBarItem
         icon={<CommentIcon />}
@@ -55,7 +64,7 @@ interface TweetToolBarItemProps {
   icon: JSX.Element;
   textColor: string;
   bgColor: string;
-  clicked?: boolean;
+  status?: boolean;
   onClick: () => void;
   meta: number;
 }
@@ -64,13 +73,14 @@ function TweetToolBarItem({
   icon,
   textColor,
   bgColor,
-  clicked = false,
+  status,
   onClick,
   meta,
 }: TweetToolBarItemProps) {
   let iconActive = "";
-  if (clicked) {
-    iconActive = "text-red-600";
+
+  if (status) {
+    iconActive = "text-red-500";
   }
 
   return (
