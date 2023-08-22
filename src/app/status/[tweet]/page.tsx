@@ -1,6 +1,7 @@
 import { Tweet } from "@/components/Ui";
 import { getPageSession } from "@/server/lucia";
 import { prisma } from "@/server/prisma";
+import { notFound } from "next/navigation";
 
 interface PageProps {
   params: {
@@ -31,5 +32,5 @@ export default async function Page({ params }: PageProps) {
     },
   });
 
-  return tweet ? <Tweet tweet={tweet}></Tweet> : <div>404</div>;
+  return tweet ? <Tweet tweet={tweet}></Tweet> : notFound();
 }
