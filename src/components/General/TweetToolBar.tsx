@@ -88,11 +88,9 @@ function TweetToolBarItem({
   onClick,
   metaCount,
 }: TweetToolBarItemProps) {
-  let iconActive = "";
+  let iconColor = "";
 
-  if (status) {
-    iconActive = "text-red-500";
-  }
+  status ? (iconColor = "text-red-500") : (iconColor = "text-slate-400");
 
   return (
     <button data-toolbar-item="true">
@@ -100,9 +98,7 @@ function TweetToolBarItem({
         <div
           className={`absolute h-8 w-8 -translate-x-1 rounded-full opacity-20  ${bgColor}`}
         ></div>
-        <div className={`h-6 w-6 fill-current text-slate-400 ${iconActive}`}>
-          {icon}
-        </div>
+        <div className={`h-6 w-6 fill-current ${iconColor}`}>{icon}</div>
         <span className={textColor}>{metaCount ? metaCount : 0}</span>
       </div>
     </button>
