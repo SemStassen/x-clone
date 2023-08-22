@@ -13,11 +13,14 @@ datasource db {
 model Tweet {
   id        String   @id @default(uuid())
   userId    String   @map("user_id")
+  parentId  String?  @map("parent_id")
   content   String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   likes     Like[]
+  parent    Tweet?   @relation("TweetToTweet", fields: [parentId], references: [id], onDelete: Cascade)
+  Tweet     Tweet[]  @relation("TweetToTweet")
 
   @@map("tweets")
 }

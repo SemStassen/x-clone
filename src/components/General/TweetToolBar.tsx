@@ -95,7 +95,7 @@ function TweetToolBarItem({
   }
 
   return (
-    <button>
+    <button data-toolbar-item="true">
       <div className="group flex items-center gap-2" onClick={onClick}>
         <div
           className={`absolute h-8 w-8 -translate-x-1 rounded-full opacity-20  ${bgColor}`}

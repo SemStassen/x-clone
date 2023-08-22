@@ -1,7 +1,11 @@
-import type { Like, Tweet, User } from "@prisma/client";
-import { TweetToolBar } from "../General";
+"use client";
 
-interface TweetWithUser extends Tweet {
+import type { Like, Tweet as TweetType, User } from "@prisma/client";
+import { Tweet } from "@/components/Ui";
+import { useRouter } from "next/navigation";
+import { isFloat64Array } from "util/types";
+
+export interface TweetWithUser extends TweetType {
   user: User;
   _count: {
     likes: number;
@@ -13,18 +17,41 @@ interface TweetsProps {
   tweets: Array<TweetWithUser>;
 }
 
-export default async function Tweets({ tweets }: TweetsProps) {
+export default function Tweets({ tweets }: TweetsProps) {
+  const router = useRouter();
+
+  const routeToTweet: (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    tweetId: TweetWithUser["id"],
+  ) => any = (event, tweetId) => {
+    event.preventDefault();
+
+    const tweet = event.currentTarget;
+    const toolbarItems = Array.from(
+      tweet.querySelectorAll("[data-toolbar-item]"),
+    );
+
+    for (const item of toolbarItems) {
+      if (item.contains(event.target as Node)) {
+        return;
+      }
+    }
+
+    router.push(`/status/${tweetId}`);
+  };
+
   return (
     <ul>
       {tweets.map((t) => (
-        <li key={t.id} className="border px-4 py-6 text-white">
-          <small>@{t.user.username}</small>
-          <p className="break-all ">{t.content}</p>
-          <TweetToolBar
-            id={t.id}
-            isLiked={Boolean(t.likes.length)}
-            likes={t._count.likes}
-          ></TweetToolBar>
+        <li key={t.id}>
+          <a
+            href={`status/${t.id}`}
+            onClick={(e) => {
+              routeToTweet(e, t.id);
+            }}
+          >
+            <Tweet tweet={t}></Tweet>
+          </a>
         </li>
       ))}
     </ul>
