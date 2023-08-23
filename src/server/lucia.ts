@@ -27,7 +27,7 @@ export const auth = lucia({
 
 export type Auth = typeof auth;
 
-export const requestPageSession = () => {
+export const getRouteSession = () => {
   const authRequest = auth.handleRequest({
     request: null,
     cookies,

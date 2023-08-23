@@ -1,4 +1,4 @@
-import { requestPageSession } from "@/server/lucia";
+import { getRouteSession } from "@/server/lucia";
 import { prisma } from "@/server/prisma";
 import { NextResponse } from "next/server";
 
@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const tweetID = await req.json();
 
-    const session = await requestPageSession();
+    const session = await getRouteSession();
 
     const like = await prisma.like.findUnique({
       where: {
@@ -56,7 +56,7 @@ export async function GET(req: Request) {
   try {
     const tweetID = await req.json();
 
-    const session = await requestPageSession();
+    const session = await getRouteSession();
 
     if (!session) {
       return NextResponse.json(null, {
