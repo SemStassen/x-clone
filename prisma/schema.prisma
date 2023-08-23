@@ -33,6 +33,19 @@ model Like {
   tweet Tweet @relation(fields: [tweetId], references: [id], onDelete: Cascade)
 
   @@id([userId, tweetId])
+  @@map("likes")
+}
+
+model Profile {
+  id         String   @id @default(uuid())
+  userId     String   @map("user_id")
+  profilePic String?
+  bio        String?
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
 }
 
 model User {
@@ -41,9 +54,12 @@ model User {
   auth_session Session[]
   key          Key[]
 
-  username String  @unique
+  username String    @unique
   tweets   Tweet[]
   likes    Like[]
+  Profile  Profile[]
+
+  @@map("users")
 }
 
 model Session {
@@ -55,6 +71,7 @@ model Session {
   user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
 
   @@index([user_id])
+  @@map("sessions")
 }
 
 model Key {
@@ -65,4 +82,5 @@ model Key {
   user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
 
   @@index([user_id])
+  @@map("keys")
 }
