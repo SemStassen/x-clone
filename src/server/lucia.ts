@@ -27,6 +27,14 @@ export const auth = lucia({
 
 export type Auth = typeof auth;
 
+export const getRouteSession = () => {
+  const authRequest = auth.handleRequest({
+    request: null,
+    cookies,
+  });
+  return authRequest.validate();
+};
+
 export const getPageSession = cache(() => {
   const authRequest = auth.handleRequest({
     request: null,

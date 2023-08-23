@@ -3,7 +3,6 @@
 import type { Like, Tweet as TweetType, User } from "@prisma/client";
 import { Tweet } from "@/components/Ui";
 import { useRouter } from "next/navigation";
-import { isFloat64Array } from "util/types";
 
 export interface TweetWithUser extends TweetType {
   user: User;
