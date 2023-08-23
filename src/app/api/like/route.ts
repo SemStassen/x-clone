@@ -1,13 +1,12 @@
-import { auth, getPageSession } from "@/server/lucia";
+import { requestPageSession } from "@/server/lucia";
 import { prisma } from "@/server/prisma";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const tweetID = await req.json();
 
-    const session = await getPageSession();
+    const session = await requestPageSession();
 
     const like = await prisma.like.findUnique({
       where: {
@@ -57,12 +56,7 @@ export async function GET(req: Request) {
   try {
     const tweetID = await req.json();
 
-    const session = await auth
-      .handleRequest({
-        request: null,
-        cookies,
-      })
-      .validate();
+    const session = await requestPageSession();
 
     if (!session) {
       return NextResponse.json(null, {

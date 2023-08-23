@@ -9,7 +9,9 @@ export default async function NavBar({ session }: NavBarProps) {
     <nav className="w-[300px]">
       <ul className=" flex flex-col gap-2 p-4 text-white">
         <NavBarItem route="/">Home</NavBarItem>
-        <NavBarItem route={session ? `/profile` : `/sign-up`}>
+        <NavBarItem
+          route={session ? `/profile/${session.user.username}` : `/sign-up`}
+        >
           profile
         </NavBarItem>
       </ul>
