@@ -44,7 +44,6 @@ export default function TweetToolBar({
         setLikes(likesState);
         setIsLiked(isLikedState);
       }
-      // router.refresh();
     } catch (e) {
       console.error(e);
     }

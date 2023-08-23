@@ -9,6 +9,12 @@ export async function POST(req: Request) {
 
     const session = await getPageSession();
 
+    if (!session) {
+      return NextResponse.json(null, {
+        status: 401,
+      });
+    }
+
     const like = await prisma.like.findUnique({
       where: {
         userId_tweetId: {
