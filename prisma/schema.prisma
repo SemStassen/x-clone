@@ -38,7 +38,7 @@ model Like {
 
 model Profile {
   id         String   @id @default(uuid())
-  userId     String   @map("user_id")
+  userId     String   @unique @map("user_id")
   profilePic String?
   bio        String?
   createdAt  DateTime @default(now()) @map("created_at")
@@ -54,10 +54,10 @@ model User {
   auth_session Session[]
   key          Key[]
 
-  username String    @unique
+  username String   @unique
   tweets   Tweet[]
   likes    Like[]
-  Profile  Profile[]
+  profile  Profile?
 
   @@map("users")
 }
