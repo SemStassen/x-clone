@@ -19,7 +19,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-slate-950`}>
         <Toaster position="top-center" reverseOrder={false}></Toaster>
-        {children}
+        <div className="container mx-auto flex min-h-screen">
+          <header>
+            <div className="w-[300px] text-white">NavBar</div>
+          </header>
+          <main className="flex w-full">
+            <div className="flex-grow">{children}</div>
+            <div className="w-[300px] text-white">Trending Tab</div>
+          </main>
+        </div>
       </body>
     </html>
   );
