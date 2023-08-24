@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-export interface FormDataSignUp {
+interface FormDataSignUp {
   username: string;
   password: string;
 }
