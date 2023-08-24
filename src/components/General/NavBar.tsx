@@ -10,7 +10,7 @@ export default async function NavBar({ session }: NavBarProps) {
       <ul className=" flex flex-col gap-2 p-4 text-white">
         <NavBarItem route="/">Home</NavBarItem>
         <NavBarItem
-          route={session ? `/profile/${session.user.username}` : `/sign-up`}
+          route={session ? `/profile/${session.user.handle}` : `/sign-up`}
         >
           profile
         </NavBarItem>

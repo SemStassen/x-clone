@@ -1,11 +1,9 @@
-import { HTMLInputTypeAttribute } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 
 type InputProps = {
   label: string;
   name: string;
-  type: HTMLInputTypeAttribute;
   register: UseFormRegisterReturn;
   className?: string;
 };
@@ -13,7 +11,6 @@ type InputProps = {
 export default function Input({
   label,
   name,
-  type,
   register,
   className,
 }: InputProps) {
@@ -22,12 +19,11 @@ export default function Input({
       <label className="block font-bold" htmlFor={name}>
         {label}
       </label>
-      <input
+      <textarea
         className={twMerge(
           "rounded-lg border border-slate-400 p-2 text-xl",
           className,
         )}
-        type={type}
         id={name}
         {...register}
       />
