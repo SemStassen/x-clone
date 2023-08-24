@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-interface FormDataSignUp {
+interface FormDataSignIn {
   username: string;
   password: string;
 }
@@ -18,9 +18,9 @@ export default function Page() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormDataSignUp>();
+  } = useForm<FormDataSignIn>();
 
-  const onSubmit = async (data: FormDataSignUp) => {
+  const onSubmit = async (data: FormDataSignIn) => {
     const response = await fetch("api/sign-in", {
       method: "POST",
       headers: {
