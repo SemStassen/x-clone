@@ -1,20 +1,13 @@
 import { ProfilePicture } from "@/components/General";
 import { EditProfileButton } from "@/components/Profile";
-import { prisma } from "@/server/prisma";
+import { getUserByHandle } from "@/server/actions";
 
 interface PageProps {
   params: { handle: string };
 }
 
 export default async function Page({ params }: PageProps) {
-  const user = await prisma.user.findUnique({
-    where: {
-      handle: params.handle,
-    },
-    include: {
-      profile: true,
-    },
-  });
+  const user = await getUserByHandle(params.handle);
 
   return user ? (
     <div className="flex  justify-between gap-4 border border-gray-200 p-4">

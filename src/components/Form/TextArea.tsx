@@ -1,4 +1,5 @@
 import { UseFormRegisterReturn } from "react-hook-form";
+import { twMerge } from "tailwind-merge";
 
 type InputProps = {
   label: string;
@@ -19,7 +20,10 @@ export default function Input({
         {label}
       </label>
       <textarea
-        className={`rounded-lg border border-slate-400 p-2 text-xl ${className}`}
+        className={twMerge(
+          "rounded-lg border border-slate-400 p-2 text-xl",
+          className,
+        )}
         id={name}
         {...register}
       />
