@@ -15,16 +15,15 @@ export default async function Page({ params }: PageProps) {
       profile: true,
     },
   });
-  console.log(user);
 
   return user ? (
     <div className="flex  justify-between gap-4 border border-gray-200 p-4">
       <div className="flex gap-4">
         <ProfilePicture
           src="/next.svg"
-          alt={`X-clone profile picture of ${user.handle}`}
+          alt={`X-clone profile picture of ${user.profile?.username}`}
         ></ProfilePicture>
-        <h2 className="text-2xl text-white">{user.handle}</h2>
+        <h2 className="text-2xl text-white">{user.profile?.username}</h2>
         <p className="text-white">{user.profile?.bio}</p>
       </div>
       <EditProfileButton></EditProfileButton>

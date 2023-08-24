@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "../General";
 import { Input, TextArea } from "../Form";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 export interface EditProfileFormData {
   username?: string;
@@ -11,6 +12,7 @@ export interface EditProfileFormData {
 }
 
 export default function EditProfileButton() {
+  const router = useRouter();
   const [editProfile, setEditProfile] = useState(false);
   const {
     register,
@@ -27,7 +29,9 @@ export default function EditProfileButton() {
       body: JSON.stringify(data),
     });
 
-    console.log(response);
+    if (response.status === 200) {
+      router.refresh();
+    }
   };
 
   return (
