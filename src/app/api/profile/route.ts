@@ -1,22 +1,36 @@
 import { EditProfileFormData } from "@/components/Profile/EditProfileButton";
 import { getRouteSession } from "@/server/lucia";
+import { prisma } from "@/server/prisma";
+import { NextResponse } from "next/server";
 
-export default async function PATCH(req: Request) {
-  const session = await getRouteSession();
-  if (!session) {
-    return new Response(null, {
-      status: 401,
+export async function PATCH(req: Request) {
+  try {
+    const session = await getRouteSession();
+    if (!session) {
+      return new Response(null, {
+        status: 401,
+      });
+    }
+
+    const data: EditProfileFormData = await req.json();
+
+    const removedEmptyData = Object.fromEntries(
+      Object.entries(data).filter(([_, v]) => v != null && v != ""),
+    );
+
+    await prisma.profile.update({
+      where: {
+        userId: session.user.userId,
+      },
+      data: removedEmptyData,
+    });
+
+    return NextResponse.json(null, {
+      status: 200,
+    });
+  } catch (e) {
+    return NextResponse.json(null, {
+      status: 500,
     });
   }
-
-  const data: EditProfileFormData = await req.json();
-  const { username, bio } = data;
-  console.log(data);
-
-  const updatedUser = await session.user.update({
-    where: {
-      id: session.user.id,
-    },
-    data: {},
-  });
 }

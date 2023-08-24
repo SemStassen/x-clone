@@ -10,11 +10,7 @@ export const POST = async (req: NextRequest) => {
   const password = formData.password;
 
   try {
-    const user = await auth.useKey(
-      "username",
-      username.toLowerCase(),
-      password,
-    );
+    const user = await auth.useKey("handle", username.toLowerCase(), password);
 
     const session = await auth.createSession({
       userId: user.userId,

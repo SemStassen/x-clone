@@ -19,13 +19,15 @@ export default function EditProfileButton() {
   } = useForm<EditProfileFormData>();
 
   const onSubmit = async (data: EditProfileFormData) => {
-    const response = await fetch("../api/profile", {
+    const response = await fetch("/api/profile", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
+
+    console.log(response);
   };
 
   return (

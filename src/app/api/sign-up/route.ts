@@ -1,4 +1,5 @@
 import { auth } from "@/server/lucia";
+import { prisma } from "@/server/prisma";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -12,12 +13,12 @@ export const POST = async (req: NextRequest) => {
   try {
     const user = await auth.createUser({
       key: {
-        providerId: "username", // auth method
+        providerId: "handle", // auth method
         providerUserId: username.toLowerCase(), // unique id when using "username" auth method
         password, // hashed by Lucia
       },
       attributes: {
-        username,
+        handle: username,
       },
     });
 
@@ -32,6 +33,17 @@ export const POST = async (req: NextRequest) => {
     });
 
     authRequest.setSession(session);
+
+    await prisma.profile.create({
+      data: {
+        username: username,
+        user: {
+          connect: {
+            id: user.userId,
+          },
+        },
+      },
+    });
 
     return new Response(null, {
       status: 200,
