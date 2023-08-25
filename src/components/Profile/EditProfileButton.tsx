@@ -30,6 +30,7 @@ export default function EditProfileButton() {
     });
 
     if (response.status === 200) {
+      setEditProfile(false);
       router.refresh();
     }
   };
