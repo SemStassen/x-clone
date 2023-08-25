@@ -13,7 +13,7 @@ export default async function Page({ params }: PageProps) {
     <div className="flex  justify-between gap-4 border border-gray-200 p-4">
       <div className="flex gap-4">
         <ProfilePicture
-          src="/next.svg"
+          src={user.profile?.profilePic ? user.profile.profilePic : "/next.svg"}
           alt={`X-clone profile picture of ${user.profile?.username}`}
         ></ProfilePicture>
         <h2 className="text-2xl text-white">{user.profile?.username}</h2>

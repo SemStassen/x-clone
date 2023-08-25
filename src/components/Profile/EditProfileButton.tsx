@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 
 export interface EditProfileFormData {
   username?: string;
+  profilePic?: string;
   bio?: string;
 }
 
@@ -48,6 +49,14 @@ export default function EditProfileButton() {
               register={register("username", {
                 minLength: 3,
                 maxLength: 20,
+              })}
+            />
+            <Input
+              label="Profile picture URL"
+              name="profilePic"
+              type="text"
+              register={register("profilePic", {
+                pattern: /[https?://.+]/,
               })}
             />
             <TextArea

@@ -11,9 +11,17 @@ export default function ProfilePicture({
   alt,
   size = 50,
 }: ProfilePictureProps) {
+  let useImage: boolean;
+
+  RegExp(/https?:\/\/.+/).test(src) ? (useImage = false) : (useImage = true);
+
   return (
-    <div className="rounded-xl bg-white ar-1 aspect-square flex h-fit w-fit">
-      <Image src={src} alt={alt} width={size} height={size}></Image>
+    <div className="ar-1 flex aspect-square h-fit w-fit rounded-xl bg-white">
+      {useImage ? (
+        <Image src={src} alt={alt} width={size} height={size}></Image>
+      ) : (
+        <img src={src} alt={alt} width={size} height={size}></img>
+      )}
     </div>
   );
 }
