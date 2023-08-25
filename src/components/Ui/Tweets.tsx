@@ -4,8 +4,14 @@ import type { Like, Tweet as TweetType, User } from "@prisma/client";
 import { Tweet } from "@/components/Ui";
 import { useRouter } from "next/navigation";
 
+interface userWithProfile extends User {
+  profile: {
+    username: string;
+  } | null;
+}
+
 export interface TweetWithUser extends TweetType {
-  user: User;
+  user: userWithProfile;
   _count: {
     likes: number;
   };
