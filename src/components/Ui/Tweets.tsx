@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 interface userWithProfile extends User {
   profile: {
     username: string;
+    profilePic: string | null;
   } | null;
 }
 
