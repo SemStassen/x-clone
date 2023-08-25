@@ -14,7 +14,7 @@ export default async function Page({ params }: PageProps) {
     <>
       <TopBar>Profile</TopBar>
       {user ? (
-        <div className="flex  justify-between gap-4 border border-gray-200 p-4">
+        <div className="flex justify-between gap-4 border border-gray-200 p-4">
           <div className="flex gap-4">
             <ProfilePicture
               src="/next.svg"
