@@ -1,18 +1,15 @@
 "use client";
 
-import type { Like, Tweet as TweetType, User } from "@prisma/client";
+import type { Like, Profile, Tweet as TweetType, User } from "@prisma/client";
 import { Tweet } from "@/components/Ui";
 import { useRouter } from "next/navigation";
 
-interface userWithProfile extends User {
-  profile: {
-    username: string;
-    profilePic: string | null;
-  } | null;
+interface UserWithProfile extends User {
+  profile: Pick<Profile, "username" | "profilePic"> | null;
 }
 
 export interface TweetWithUser extends TweetType {
-  user: userWithProfile;
+  user: UserWithProfile;
   _count: {
     likes: number;
   };
