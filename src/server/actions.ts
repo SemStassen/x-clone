@@ -7,7 +7,16 @@ const getTweetsByAmount = cache(
       take: amount,
       orderBy: { createdAt: "desc" },
       include: {
-        user: true,
+        user: {
+          include: {
+            profile: {
+              select: {
+                username: true,
+                profilePic: true,
+              },
+            },
+          },
+        },
         _count: {
           select: {
             likes: true,
