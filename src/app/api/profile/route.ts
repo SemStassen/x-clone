@@ -17,7 +17,6 @@ export async function PATCH(req: Request) {
     const removedEmptyData = Object.fromEntries(
       Object.entries(data).filter(([_, v]) => v != null && v != ""),
     );
-    console.log(removedEmptyData);
 
     await prisma.profile.update({
       where: {
@@ -30,7 +29,6 @@ export async function PATCH(req: Request) {
       status: 200,
     });
   } catch (e) {
-    console.log(e);
     return NextResponse.json(null, {
       status: 500,
     });
