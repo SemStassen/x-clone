@@ -36,6 +36,7 @@ export default function Tweets({ tweets }: TweetsProps) {
       tweet.querySelectorAll("[data-toolbar-item]"),
     );
 
+    // if clicked on a toolbar item, don't route
     for (const item of toolbarItems) {
       if (item.contains(event.target as Node)) {
         return;

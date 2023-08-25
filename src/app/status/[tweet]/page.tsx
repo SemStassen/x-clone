@@ -1,6 +1,6 @@
 import { Tweet } from "@/components/Ui";
+import { getTweetById } from "@/server/actions";
 import { getPageSession } from "@/server/lucia";
-import { prisma } from "@/server/prisma";
 import { notFound } from "next/navigation";
 
 interface PageProps {
@@ -13,24 +13,7 @@ export default async function Page({ params }: PageProps) {
   const session = await getPageSession();
 
   const tweetId = params.tweet;
-  const tweet = await prisma.tweet.findUnique({
-    where: {
-      id: tweetId,
-    },
-    include: {
-      user: true,
-      _count: {
-        select: {
-          likes: true,
-        },
-      },
-      likes: {
-        where: {
-          userId: session?.user.userId,
-        },
-      },
-    },
-  });
+  const tweet = await getTweetById(session, tweetId);
 
   return tweet ? <Tweet tweet={tweet}></Tweet> : notFound();
 }
